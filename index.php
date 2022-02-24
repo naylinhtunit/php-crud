@@ -19,6 +19,15 @@
         $result = $conn->query(" SELECT * FROM crud ") or die(mysqli_error($conn));
     ?>
     
+    <?php if ($_SESSION['msg']) { ?>
+        <div class="alert alert-<?= $_SESSION['msg-type'] ?> m-0">
+            <?php 
+                echo $_SESSION['msg'];
+                unset($_SESSION['msg']);
+            ?>
+        </div>
+    <?php } ?>
+
     <div class="container">
         <!-- date show -->
         <div class="row g-3 align-items-center my-5">

@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 $name = '';
 $age = '';
 $phone = '';
@@ -20,8 +22,12 @@ if (isset($_POST['submit'])) {
     $conn->query("INSERT INTO crud ( name, age, phone, location ) VALUES ('$name', '$age', '$phone', '$location')")
     or die($conn->error);
 
+    $_SESSION['msg'] = 'Your record has been saved';
+    $_SESSION['msg-type'] = 'success';
+
     // Redirect
     header("Location: index.php");
+
 }
 
 // Edit
@@ -58,7 +64,12 @@ if (isset($_POST['update'])) {
     $conn->query("UPDATE crud set name = '$name', age = '$age', phone = '$phone', location = '$location' WHERE id = $id")
             or die(mysqli_error($conn));
 
+    $_SESSION['msg'] = 'Your record has been updated';
+    $_SESSION['msg-type'] = 'success';
+
+    // Redirect        
     header("Location: index.php");
+
 }
 
 // Delete
@@ -67,6 +78,10 @@ if (isset($_GET['delete'])) {
     // echo $id;
     $conn->query("DELETE FROM crud WHERE id = $id") or die($conn->error);
 
+    $_SESSION['msg'] = 'Your record has been deleted';
+    $_SESSION['msg-type'] = 'danger';
+    
     // Redirect
     header("Location: index.php");
+
 }
